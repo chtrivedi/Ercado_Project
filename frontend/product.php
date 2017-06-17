@@ -25,7 +25,7 @@ function multiexplode ($delimiters,$string) {
                     <!-- Start .row -->
                     <div class="row" id="row">
                         <!-- col-lg-4 end here -->
-                        <div id="main">
+                       
                         <div class="col-lg-9 col-md-9 img-responsive" id="col2">
                             <!-- col-lg-4 start here -->
                             <div class="panel panel-default">
@@ -49,7 +49,7 @@ function multiexplode ($delimiters,$string) {
 
 										<div class="panel panel-default plain" >
 											<div class="panel-heading" style="cursor: auto">
-												<h2 class=""><strong><?php echo $arr['name']; ?></strong></h2>
+												<h2 class=""><strong><?php $product_name=$arr['name']; echo $arr['name']; ?></strong></h2>
 											</div>
 											<div class="panel-body">
 												<div class="row">
@@ -83,9 +83,9 @@ function multiexplode ($delimiters,$string) {
 													<form name="cartform" id="cartform" >
 														<div class="row">
 														<div class="panel panel-body" style="border: 1px solid burlywood;margin-bottom: 0px;">
-															<input type="radio" name="delivery" id="radio-choice-1" tabindex="2" value="2-days"><label for="radio-choice-1">            &nbsp;$7<span>00</span><em>   2-day delivery</em></label><br>
+															<input type="radio" name="delivery" id="radio-choice-1" tabindex="2" value="2-day delivery"><label for="radio-choice-1">            &nbsp;$7<span>00</span><em>   2-day delivery</em></label><br>
 
-															<input type="radio" name="delivery" id="radio-choice-2" tabindex="3" value="0-days"><label for="radio-choice-2">            &nbsp;$9<span>00</span><em>    same-day delivery</em></label>
+															<input type="radio" name="delivery" id="radio-choice-2" tabindex="3" value="same-day delivery"><label for="radio-choice-2">            &nbsp;$9<span>00</span><em>    same-day delivery</em></label>
 															<input  type="text" value="<?php echo $product_id; ?>" name="prod_id" hidden>
 															</div>
 														</div>
@@ -111,6 +111,17 @@ function multiexplode ($delimiters,$string) {
 																var rsinner = $('.chat-box .chat-messages');
 																rsinner.animate({ scrollTop: rsinner[0].scrollHeight }, 1000);
 																$('.chat-box .chat-messages').append('<li><div class="avatar"><img src="assets/img/ercado_logo.png" alt=""></div><div class="message"><p class="chat-name"><span class="chat-time"> now </span></p><p class="chat-txt">	Item is added to the cart, Set topic "cart" to finalize the order.</p></div></li>');
+																<?php 
+																	$user= $_SESSION['user_name'];
+																	if($user==''){$user="Guest";}
+																	$user_id=$_SESSION['user_id'];
+																	if($user_id==''){$user_id="1001";}
+																	$message= "Item is added to the cart, Set topic cart to finalize the order.";
+																	$date_time=date('Y-m-d H:m:s');
+																	$owner="admin";
+																	$query=mysql_query("INSERT INTO `chat`(`user_id`,`user_name`,`message`,`owner`,`msg_time`) VALUES ('$user_id','$user','$message','$owner','$date_time')");		
+																	?>
+																
 															}
 
 														});
@@ -147,7 +158,7 @@ function multiexplode ($delimiters,$string) {
                             
                             <!-- End .panel -->
                         </div>
-                        </div>
+                        
                         <script>
 							$(document).ready(function(){
 
@@ -156,8 +167,22 @@ function multiexplode ($delimiters,$string) {
 							rsinner.animate({ scrollTop: rsinner[0].scrollHeight }, 1000);
 								var title=$('.panel-heading').text();
 								$('.chat-box .chat-messages').append('<li><div class="avatar"><img src="assets/img/ercado_logo.png" alt=""></div><div class="message"><p class="chat-name"><span class="chat-time"> now </span></p><p class="chat-txt">You are now viewing, '+ title +'</p></div></li>');
+								
 								$('.chat-box .chat-messages').append('<li><div class="avatar"><img src="assets/img/ercado_logo.png" alt=""></div><div class="message"><p class="chat-name"><span class="chat-time"> now </span></p><p class="chat-txt">Topic is now set to current page . You can change the topic to get more result.</p></div></li>');
-
+									
+								<?php 
+									$user= $_SESSION['user_name'];
+									if($user==''){$user="Guest";}
+									$user_id=$_SESSION['user_id'];
+									if($user_id==''){$user_id="1001";}
+									$message= "You are now viewing,".$product_name;
+									$date_time=date('Y-m-d H:m:s');
+									$owner="admin";
+									$query=mysql_query("INSERT INTO `chat`(`user_id`,`user_name`,`message`,`owner`,`msg_time`) VALUES ('$user_id','$user','$message','$owner','$date_time')");		
+									$message2="Topic is now set to current page . You can change the topic to get more result.";
+									$query=mysql_query("INSERT INTO `chat`(`user_id`,`user_name`,`message`,`owner`,`msg_time`) VALUES ('$user_id','$user','$message2','$owner','$date_time')");
+								
+								?>
 
 						});
 

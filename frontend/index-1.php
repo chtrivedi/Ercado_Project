@@ -16,7 +16,7 @@
                        
                         <div class="col-lg-3 col-md-3">
                             <!-- col-lg-4 start here -->
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" style="position:fixed">
                                 <!-- Start .panel -->                                
                                 <div class="panel-body">
                                     Profile
@@ -32,7 +32,7 @@
                                 
                                 <div class="panel-body">
 									<?php
-											$res = selectAllRecords('news');											
+											$res = selectAllRecords('news');
 											while($arr = recFetch($res))
 											{
 									?>

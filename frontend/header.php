@@ -36,11 +36,11 @@
 		  	<a href="#" data-toggle="dropdown"> 
             
 				<img class="avatar" src="<?php if(isset($_SESSION['user_name'])){echo $user_img;}else{echo "assets/img/avatars/guest.jpg";} ?>" width="36" height="36" alt=""> 
-					<span class="avatar-name" style="color: black"><?php if(isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}else{echo "Welcome Guest";}; ?></span> <span class="caret ml5"></span> 
+					<span class="avatar-name" style="color: black"><?php if(isset($_SESSION['user_name'])){echo $user_fname.' '.$user_lname;}else{echo "Welcome Guest";}; ?></span> <span class="caret ml5"></span> 
 			</a>
             <ul class="dropdown-menu right" role="menu">
-              <li><a href="#"><i class="im-user"></i> Profile</a> </li>
-              <li><a href="#"><i class="im-cog2"></i> Settings</a> </li>
+              <li><a href="profile.php"><i class="im-user"></i> Profile</a> </li>
+              <li><a href="orders.php"><i class="im-cog2"></i> Orders History</a> </li>
               <li><a href="logout.php"><i class="im-switch"></i> Logout</a> </li>
             </ul>
           </li>

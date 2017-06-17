@@ -42,7 +42,10 @@
 						if($ssn_userid==''){$ssn_userid="1001";}
 						$get_chat=mysql_query("select * from chat where user_id='$ssn_userid'");
 						while(@$arr=mysql_fetch_array($get_chat))
-						{?>
+						{
+							if($arr['owner']=="user")
+							{
+						?>
                         <li class="chat-me">
                             <div class="avatar">
                                 <img src="<?php if(isset($_SESSION['user_name'])){echo $user_img;}else{echo "assets/img/avatars/guest.jpg";} ?>" alt="@<?php if(isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}else{echo "Guest";}; ?>"></div>
@@ -53,6 +56,18 @@
                         </li>
                         
 					<?php 	}
+							if($arr['owner']=="admin"){?>
+						
+						<li>
+                            <div class="avatar">
+                                <img src="assets/img/ercado_logo.png" alt=""></div>
+                            <div class="message">
+                                <p class="chat-name"><span class="chat-time"></span></p>
+                                <p class="chat-txt"><?php echo $arr['message']; ?> </p>
+                            </div>
+                        </li>
+						<?php	}
+						}
 					
 					?>
                     
@@ -60,9 +75,9 @@
 				</ul>
               <center>
                
-                <input type="radio"  value="articles" name="topicgroup" id="topicgroup">&nbsp;Articles
-                <input type="radio"  value="products" name="topicgroup" id="topicgroup">&nbsp;Products&nbsp;
-				  <a href="#" class="btn btn-primary" id="cartbtn">Cart</a>
+                <input type="radio"  value="ar"  name="topicgroup" id="topicgroup">&nbsp;Articles
+                <input type="radio"  value="pr"  name="topicgroup" id="topicgroup">&nbsp;Products&nbsp;
+				  <a href="cart.php" class="btn btn-primary" id="cartbtn">Cart</a>
                
               </center>
                 <div class="chat-write" style="position:absolute;bottom: -63px;width: 316px;right: -7px;">
@@ -90,21 +105,6 @@
 							if (e.which == 13 && ! e.shiftKey) {
 								$("#LoadingImage").show(100);
 								 e.preventDefault();
-								 var topic=$('input[name=topicgroup]:checked').val();
-								//alert(topic);
-								<?php unset($_SESSION['topic']); ?>
-								if(topic == "products"){
-									//alert("products"); 
-									<?php unset($_SESSION['topic']); 
-									$_SESSION['topic']="products"; ?>
-								}
-								else{
-									//alert("articles"); 
-									<?php unset($_SESSION['topic']);
-									$_SESSION['topic']="articles"; ?>
-								}
-								
-
 								 $.ajax({
 								type: 'post',
 								url: 'chat_data.php',
@@ -118,6 +118,7 @@
 								var msg=$('#sendMsg12').val();
 
 								$('.chat-box .chat-messages').append('<li class="chat-me"><div class="avatar"><img src="<?php if(isset($_SESSION['user_name'])){echo $user_img;}else{echo "assets/img/avatars/guest.jpg";} ?>" alt="@<?php if(isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}else{echo "Guest";}; ?>"></div><div class="message"><p class="chat-name"><?php //echo $_SESSION['user_name']; ?><span class="chat-time"> now </span></p><p class="chat-txt">'+ msg +'</p></div></li>');
+								
 
 
 								$('#sendMsg12').val('').trigger('autosize.resize');
@@ -137,11 +138,7 @@
 					</script>
                
               <script>
-				$('#cartbtn').click(function(){
-					//alert("The paragraph was clicked.");
-					$('#main').hide();
-					$('#main').append("<?php include 'cart.php';?>");
-				});
+				
 			  </script>
                
 			</div>

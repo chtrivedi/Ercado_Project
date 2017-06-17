@@ -25,11 +25,14 @@ function multiexplode ($delimiters,$string) {
                     <!-- Start .row -->
                     <div class="row">
                        
-                        <div class="col-lg-3 col-md-3" style="">
+                        <div class="col-lg-3 col-md-3" id="col1" style="">
                             <!-- col-lg-4 start here -->
                             <div class="panel panel-default" style="position:fixed">
                                 <!-- Start .panel -->                                 
                                 <div class="panel-body" >
+                               
+                                  
+                                   
                                     <img src="<?php if(isset($_SESSION['user_name'])){echo $fbUserProfile['cover']['source'];}else{echo "assets/img/gallery/1.jpg";} ?>" style="height:163px;width:289px;" class="img-responsive">
                                     <?php //echo $fbUserProfile['cover']['source']; ?>
                                     <div class="chat-box chatbox-show avatar" style="text-align: center;margin-top: -43px;">
@@ -62,7 +65,10 @@ function multiexplode ($delimiters,$string) {
 									rsinner.animate({ scrollTop: rsinner[0].scrollHeight }, 1000);
 									});
 
-									
+									$('#topicgroup').on('click', function() {
+										alert("hello");
+										
+									   alert($('input[name=topicgroup]:checked').val()); 
 									});
 								</script>
 								<?php
@@ -75,15 +81,17 @@ function multiexplode ($delimiters,$string) {
 								$arr_chat=mysql_fetch_array($get_chat);
 								$str=multiexplode(array(",",".","|",":"," "),$arr_chat[0]);
 								$count=0;
-								
-								
+								echo $t='{{topic}}';	
+								if($topic1=="articles")
+								{
+									echo "articles";
 								foreach($str as $str1)
 								{
 									
 									if(strlen($str1)>1)	
 									{
-									$art = mysql_query("select * from news where title LIKE '%$str1%' OR descr LIKE '%$str1%'");
-									$count = $count+mysql_num_rows($art);
+									$art=mysql_query("select * from news where title LIKE '%$str1%' OR descr LIKE '%$str1%'");
+									$count=$count+mysql_num_rows($art);
 
 										while(@$arr=mysql_fetch_array($art))
 										{?>
@@ -141,7 +149,10 @@ function multiexplode ($delimiters,$string) {
 								   <?php
 								   }
 								  }
-								
+								}
+								if($topic1=="products")
+								{
+									echo "products";
 								foreach($str as $str1)
 								{
 								    if(strlen($str1)>1)	
@@ -177,7 +188,7 @@ function multiexplode ($delimiters,$string) {
 										}
 									}
 								 }
-								
+								}
 								?>
 								
 							   
